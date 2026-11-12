@@ -358,6 +358,13 @@ label.chk input{width:18px;height:18px;accent-color:var(--lamp)}
   .comp-grid{grid-template-columns:minmax(0,1fr)}
   .comp-sum{grid-template-columns:1fr}
 }
+/* v4.1 示例模式 */
+.demo-bar{position:sticky;top:8px;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:12px 0 4px;padding:10px 14px;border-radius:14px;
+  background:linear-gradient(100deg,rgba(229,137,74,.32),rgba(242,182,97,.18)),var(--bg1);border:1px solid rgba(242,182,97,.55);color:var(--ink);font-size:14px;font-weight:600;box-shadow:0 10px 30px -12px rgba(0,0,0,.8);backdrop-filter:blur(8px)}
+.demo-bar[hidden]{display:none}
+.demo-bar.legacy{position:static;background:rgba(255,255,255,.04);border-color:var(--line2);font-weight:400;color:var(--ink2)}
+.demo-bar .btn{white-space:nowrap}
+@media (max-width:560px){.demo-bar{font-size:13px}.demo-bar .btn{width:100%;justify-content:center}}
 
 </style>
 </head>
@@ -370,6 +377,7 @@ label.chk input{width:18px;height:18px;accent-color:var(--lamp)}
       <button class="btn primary" id="btnAdd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">添加人员</span></button>
     </div>
   </div>
+  <div class="demo-bar" id="demoBar" hidden></div>
   <header class="hero" id="hero">
     <div id="heroL"></div>
     <div class="gridcard" id="heroR"></div>
@@ -388,7 +396,7 @@ label.chk input{width:18px;height:18px;accent-color:var(--lamp)}
     <div id="list"></div>
   </section>
 </div>
-<footer>所有数据只保存在这台设备的浏览器里，不会上传。平均寿命、退休年龄与陪伴时间均为统计 / 政策口径与个人假设的估算，只为让人感受时间，不作任何预测。<br>活着 · v4</footer>
+<footer>所有数据只保存在这台设备的浏览器里，不会上传。平均寿命、退休年龄与陪伴时间均为统计 / 政策口径与个人假设的估算，只为让人感受时间，不作任何预测。<br>活着 · v4.1</footer>
 
 <!-- 添加 / 编辑 -->
 <div class="ov" id="ovPerson"><div class="modal" role="dialog">
@@ -439,7 +447,7 @@ label.chk input{width:18px;height:18px;accent-color:var(--lamp)}
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn sm" id="bExport">导出备份</button>
       <button class="btn sm" id="bImport">从备份恢复</button>
-      <button class="btn sm" id="bDemo">导入示例数据</button>
+      <button class="btn sm" id="bDemo">查看示例</button>
       <button class="btn sm danger" id="bClear">清空全部</button>
       <input type="file" id="fileIn" accept=".json,application/json" hidden>
     </div>
@@ -652,7 +660,10 @@ function migrate(){let ch=false;people.forEach(p=>{
   if(/^demo/.test(String(p.id))&&relType(p)==='child'&&p.g==='f'&&p.sy===2014&&p.sm===6&&p.sd===1&&p.name!=='王小禾'){p.name='王小禾';ch=true}/* 旧示例女儿改名 */
 });if(ch)saveP()}
 function load(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch(e){return d}}
-function saveP(){localStorage.setItem(LS_P,JSON.stringify(people))}
+/* 示例模式：示例只在内存里，绝不写入用户数据 */
+let demoMode=false,realSel=null;const LS_BAK='huozhe.v2.people.bak';
+function saveP(){if(demoMode)return;localStorage.setItem(LS_P,JSON.stringify(people))}
+function saveSel(){if(!demoMode&&selId)localStorage.setItem(LS_SEL,selId)}
 function saveS(){localStorage.setItem(LS_S,JSON.stringify(settings))}
 
 /* ---------- 工具 ---------- */
@@ -984,8 +995,15 @@ function tick(){
 }
 let lastDay=new Date().toDateString();
 setInterval(()=>{const d=new Date().toDateString();if(d!==lastDay){lastDay=d;renderAll()}else tick()},1000);
-function renderAll(){renderHero();renderFamily();renderComp();renderList();tick()}
-function select(id){selId=id;localStorage.setItem(LS_SEL,selId);renderHero();renderFamily();$$('.card').forEach(c=>c.classList.toggle('sel',c.dataset.id===selId));tick()}
+function renderBar(){const bar=$('#demoBar');const legacy=!demoMode?people.filter(p=>/^demo/.test(String(p.id))):[];
+  document.body.classList.toggle('demo-on',demoMode);
+  if(demoMode){bar.hidden=false;bar.className='demo-bar';bar.innerHTML=`<span>正在查看示例 · 这里的改动不会保存，你自己的数据没有变</span><button class="btn primary sm" id="btnExitDemo">${load(LS_P,[]).length?'返回我的数据':'退出示例'}</button>`}
+  else if(legacy.length){bar.hidden=false;bar.className='demo-bar legacy';bar.innerHTML=`<span>你的列表里混有 ${legacy.length} 位以前导入的示例人员（${legacy.map(p=>esc(p.name)).join('、')}）</span><button class="btn sm" id="btnRmDemo">移除这些示例人员</button>`}
+  else{bar.hidden=true;bar.innerHTML=''}}
+$('#demoBar').onclick=e=>{if(e.target.closest('#btnExitDemo'))exitDemo();
+  else if(e.target.closest('#btnRmDemo')){const lg=people.filter(p=>/^demo/.test(String(p.id)));confirmBox('移除示例人员？',`将移除：${lg.map(p=>esc(p.name)).join('、')}。你自己添加的人员会保留。`,()=>{localStorage.setItem(LS_BAK,JSON.stringify(people));people=people.filter(p=>!/^demo/.test(String(p.id)));saveP();renderAll();toast('已移除示例人员')})}};
+function renderAll(){renderBar();renderHero();renderFamily();renderComp();renderList();tick()}
+function select(id){selId=id;saveSel();renderHero();renderFamily();$$('.card').forEach(c=>c.classList.toggle('sel',c.dataset.id===selId));tick()}
 
 /* ---------- 弹窗 ---------- */
 function openOv(id){$(id).classList.add('show');document.body.style.overflow='hidden'}
@@ -1055,7 +1073,7 @@ function openForm(p){
 $('#pSave').onclick=()=>{
   const name=$('#fName').value.trim();if(!name){toast('请填写姓名');$('#fName').focus();return}
   if(!preview()){toast('出生日期不能晚于今天');return}
-  if(F.rt==='self'){const o=people.find(x=>isSelf(x)&&x.id!==F.id);if(o){toast('「本人」只能有一位，已有：'+o.name);return}}
+  if(F.rt==='self'){const o=people.find(x=>isSelf(x)&&x.id!==F.id);if(o&&!F.selfOk){confirmBox('已经有“本人”了',`现在的本人是「${esc(o.name)}」。确定把「${esc(name)}」设为本人吗？「${esc(o.name)}」会改为“其他”。`,()=>{o.relType='other';if(/^(我|本人|自己)$/.test(o.rel||''))o.rel='';F.selfOk=true;$('#pSave').click();F.selfOk=false});return}}
   if(F.rt==='spouse'){const o=people.find(x=>relType(x)==='spouse'&&x.id!==F.id);if(o){toast('已有配偶：'+o.name);return}}
   const s=curSolar(),old=people.find(x=>x.id===F.id);
   const rec={...(old||{}),id:F.id||('p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)),name,rel:$('#fRel').value.trim(),relType:F.rt,g:F.g,cal:F.cal,sy:s.y,sm:s.m,sd:s.d,
@@ -1064,7 +1082,7 @@ $('#pSave').onclick=()=>{
   const i=people.findIndex(p=>p.id===rec.id);
   if(rec.relType==='child'&&!rec.kidMode)rec.kidMode='auto';
   if(i>=0)people[i]=rec;else{rec.created=Date.now();people.push(rec)}
-  selId=rec.id;localStorage.setItem(LS_SEL,selId);saveP();closeOv($('#ovPerson'));renderAll();toast(i>=0?'已更新':'已添加 '+name);
+  selId=rec.id;saveSel();saveP();closeOv($('#ovPerson'));renderAll();toast((i>=0?'已更新':'已添加 '+name)+(demoMode?'（示例模式，不会保存）':''));
 };
 
 /* ---------- 设置 ---------- */
@@ -1073,22 +1091,21 @@ function renderRegions(){$('#regions').innerHTML=Object.entries(REGIONS).map(([k
   <div><div class="t">${r.name}${r.m?` · 男 ${r.m} 岁 / 女 ${r.f} 岁`:''}</div><div class="s">${r.src}${r.url?`<br>来源：<a href="${r.url}" target="_blank" rel="noopener">${r.url}</a>`:''}</div></div></label>`).join('')}
 $('#regions').onchange=e=>{S.region=e.target.value;const r=REGIONS[S.region];if(r.m){S.m=r.m;S.f=r.f;$('#sM').value=r.m;$('#sF').value=r.f}renderRegions()};
 ['#sM','#sF'].forEach(id=>$(id).oninput=()=>{const r=REGIONS[S.region];if(r.m&&(+$('#sM').value!==r.m||+$('#sF').value!==r.f)){S.region='custom';renderRegions()}});
-$('#btnSettings').onclick=()=>{S={...settings};$('#sM').value=S.m;$('#sF').value=S.f;renderRegions();openOv('#ovSet')};
+$('#btnSettings').onclick=()=>{$('#bDemo').textContent=demoMode?'退出示例':'查看示例';S={...settings};$('#sM').value=S.m;$('#sF').value=S.f;renderRegions();openOv('#ovSet')};
 $('#sSave').onclick=()=>{const m=+$('#sM').value,f=+$('#sF').value;if(!(m>20&&m<130&&f>20&&f<130)){toast('请输入 20–130 之间的数值');return}
   settings={...settings,region:S.region,m,f};saveS();closeOv($('#ovSet'));renderAll();toast('已按 '+REGIONS[settings.region].name+' 数据重新计算')};
 $('#bExport').onclick=()=>{const blob=new Blob([JSON.stringify({app:'huozhe',v:4,people,settings},null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);const d=new Date();a.download=`活着-备份-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 $('#bImport').onclick=()=>$('#fileIn').click();
-$('#fileIn').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const j=JSON.parse(rd.result);if(!Array.isArray(j.people))throw 0;
+$('#fileIn').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{if(demoMode){demoMode=false;selId=realSel}try{const j=JSON.parse(rd.result);if(!Array.isArray(j.people))throw 0;
   people=j.people.filter(p=>p&&p.name&&p.sy);if(j.settings)settings=j.settings;migrate();saveP();saveS();closeOv($('#ovSet'));renderAll();toast(`已恢复 ${people.length} 位`)}catch(err){toast('备份文件格式不对')}};rd.readAsText(f);e.target.value=''};
-$('#bDemo').onclick=()=>{closeOv($('#ovSet'));addDemo()};
-$('#bClear').onclick=()=>confirmBox('清空全部？','所有人员都会被删除，且不能撤销。建议先“导出备份”。',()=>{people=[];saveP();closeOv($('#ovSet'));renderAll();toast('已清空')});
+$('#bDemo').onclick=()=>{closeOv($('#ovSet'));demoMode?exitDemo():addDemo()};
+$('#bClear').onclick=()=>demoMode?toast('示例模式下不能清空，请先退出示例'):confirmBox('清空全部？','所有人员都会被删除，且不能撤销。建议先“导出备份”。',()=>{people=[];saveP();closeOv($('#ovSet'));renderAll();toast('已清空')});
 
 /* ---------- 示例 ---------- */
-function addDemo(){
+function demoPeople(){
   const L=(ly,lm,ld,leap=false)=>{const s=lunarToSolar(ly,lm,ld,leap);return{cal:'lunar',ly,lm,ld,leap,sy:s.y,sm:s.m,sd:s.d}};
   const S2=(y,m,d)=>({cal:'solar',sy:y,sm:m,sd:d});
-  const hasSelf=!!selfPerson(),hasSp=people.some(p=>relType(p)==='spouse');
   const demo=[
     {name:'猴哥',rel:'我',relType:'self',g:'m',...L(1987,1,1),time:'06:30'},
     {name:'刘晓燕',rel:'爱人',relType:'spouse',g:'f',...S2(1989,9,8)},
@@ -1099,10 +1116,18 @@ function addDemo(){
     {name:'王德厚',rel:'爷爷',relType:'other',g:'m',...L(1933,12,8),visits:4,vUnit:'y',visitHours:8},
     {name:'赵一鸣',rel:'老友',relType:'other',g:'m',...S2(1986,3,12),visits:1,vUnit:'m',visitHours:3},
     {name:'陈小满',rel:'外甥女',relType:'other',g:'f',...S2(2025,8,5),comp:false}
-  ].filter(d=>!(hasSelf&&d.relType==='self')&&!(hasSp&&d.relType==='spouse'));
-  const t=Date.now();demo.forEach((d,i)=>people.push({ret:'std',time:'',life:null,comp:true,...(d.relType==='child'?{kidMode:'auto'}:{}),...d,id:'demo'+t.toString(36)+i,created:t+i}));
-  selId=(selfPerson()||people[0]).id;localStorage.setItem(LS_SEL,selId);
-  saveP();renderAll();toast('已导入示例数据，可随时编辑或删除');
+  ];
+  const t=Date.now();return demo.map((d,i)=>({ret:'std',time:'',life:null,comp:true,...(d.relType==='child'?{kidMode:'auto'}:{}),...d,id:'sample'+i,created:t+i}));
+}
+function addDemo(){
+  if(demoMode)return;
+  const saved=localStorage.getItem(LS_P);if(saved&&saved!=='[]')localStorage.setItem(LS_BAK,saved);/* 进入示例前留一份备份 */
+  realSel=selId;demoMode=true;people=demoPeople();selId=people[0].id;
+  renderAll();window.scrollTo({top:0,behavior:'smooth'});toast('正在查看示例，你自己的数据没有变');
+}
+function exitDemo(){
+  if(!demoMode)return;demoMode=false;people=load(LS_P,[]);migrate();selId=realSel;
+  renderAll();window.scrollTo({top:0,behavior:'smooth'});toast(people.length?`已返回你的数据（${people.length} 位）`:'已退出示例');
 }
 
 /* ---------- 事件 ---------- */
