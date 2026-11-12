@@ -325,6 +325,40 @@ footer{text-align:center;font-size:12px;color:var(--ink3);padding:30px 20px 40px
 }
 #heroL,#heroR{min-width:0}
 
+/* ---------- v4：醒目的模块标题 ---------- */
+.sec-head{position:relative;padding-bottom:12px;margin-bottom:16px;border-bottom:1px solid transparent;border-image:linear-gradient(90deg,rgba(242,182,97,.55),rgba(242,182,97,.12) 45%,transparent) 1}
+.sec-head h2{position:relative;display:flex;align-items:baseline;flex-wrap:wrap;font-size:30px;font-weight:900;letter-spacing:.14em;line-height:1.25;padding-left:18px;
+  background:linear-gradient(100deg,#FFE4AE 0%,var(--lamp) 45%,var(--ember) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 28px rgba(242,182,97,.18)}
+.sec-head h2:before{content:"";position:absolute;left:0;top:.18em;bottom:.12em;width:6px;border-radius:4px;background:linear-gradient(180deg,var(--lamp2),var(--ember));box-shadow:0 0 14px rgba(242,182,97,.6)}
+.sec-head h2[data-k]:after{content:attr(data-k);order:-1;flex-basis:100%;font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.18em;color:var(--ember);-webkit-text-fill-color:var(--ember);margin-bottom:2px;opacity:.9}
+.sec-head h2 span{-webkit-text-fill-color:var(--ink3);color:var(--ink3);text-shadow:none}
+.sec-head p{font-size:13.5px;color:var(--ink2);margin-top:6px;padding-left:18px}
+.gridcard .t{padding-bottom:8px;margin-bottom:4px;border-bottom:1px solid rgba(242,182,97,.22)}
+.gridcard .t h2{font-size:22px;font-weight:900;letter-spacing:.12em;background:linear-gradient(100deg,#FFE4AE,var(--lamp) 55%,var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;position:relative;padding-left:14px}
+.gridcard .t h2:before{content:"";position:absolute;left:0;top:.2em;bottom:.15em;width:5px;border-radius:3px;background:linear-gradient(180deg,var(--lamp2),var(--ember));box-shadow:0 0 10px rgba(242,182,97,.55)}
+/* 陪伴：开关与模式 */
+.cp-off{margin-left:6px;font-size:11px;color:var(--ink3);background:none;border:1px solid var(--line2);border-radius:99px;padding:1px 8px;cursor:pointer;white-space:nowrap}
+.cp-off:hover{color:var(--ink);border-color:var(--ink3)}
+.kseg{display:flex;gap:6px;margin-top:12px}
+.kseg button{flex:1;font-size:12.5px;padding:6px 8px;border-radius:10px;border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--ink2);cursor:pointer}
+.kseg button.on{background:rgba(242,182,97,.16);border-color:rgba(242,182,97,.55);color:var(--lamp2);font-weight:700}
+.cp-edit select{background:var(--bg1);border:1px solid var(--line2);border-radius:8px;padding:4px 6px;color:var(--lamp2);font-weight:700}
+.cp-assume{margin-top:10px;font-size:12.5px;color:var(--ink2);background:rgba(242,182,97,.07);border-left:3px solid var(--lamp);border-radius:6px;padding:6px 10px}
+.cp-assume b{color:var(--lamp2)}
+.comp-off{margin-top:12px;font-size:12.5px;color:var(--ink3);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.comp-off span{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:99px;padding:2px 4px 2px 10px;color:var(--ink2)}
+.comp-off button{margin-left:6px;font-size:11px;background:rgba(242,182,97,.15);color:var(--lamp2);border:0;border-radius:99px;padding:1px 8px;cursor:pointer}
+.comp-sum{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+label.chk{display:flex;align-items:center;flex-wrap:wrap;gap:8px;cursor:pointer;font-size:14px;color:var(--ink)}
+label.chk input{width:18px;height:18px;accent-color:var(--lamp)}
+@media (max-width:560px){
+  .sec-head h2{font-size:25px;padding-left:15px}
+  .sec-head p{padding-left:15px}
+  .gridcard .t h2{font-size:19px}
+  .comp-grid{grid-template-columns:minmax(0,1fr)}
+  .comp-sum{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -333,7 +367,7 @@ footer{text-align:center;font-size:12px;color:var(--ink3);padding:30px 20px 40px
     <div class="brand"><div class="seal">活</div><div><h1>活着</h1><div class="sub">你已经活了多久</div></div></div>
     <div class="top-actions">
       <button class="btn" id="btnSettings" title="寿命与数据设置"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg><span class="lbl">设置</span></button>
-      <button class="btn primary" id="btnAdd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">添加家人</span></button>
+      <button class="btn primary" id="btnAdd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">添加人员</span></button>
     </div>
   </div>
   <header class="hero" id="hero">
@@ -344,7 +378,7 @@ footer{text-align:center;font-size:12px;color:var(--ink3);padding:30px 20px 40px
   <section class="blk" id="secComp"></section>
   <section class="blk" id="secCards">
     <div class="sec-head">
-      <div><h2>我在乎的人<span id="count"></span></h2></div>
+      <div><h2 data-k="03 · 每一个人">我在乎的人<span id="count"></span></h2></div>
       <div class="sort" id="sortBox">排序
         <select class="pill" id="sortSel">
           <option value="added">添加顺序</option><option value="ageDesc">年龄 · 从大到小</option><option value="ageAsc">年龄 · 从小到大</option><option value="remainAsc">剩余时间 · 从少到多</option><option value="name">姓名</option>
@@ -354,11 +388,11 @@ footer{text-align:center;font-size:12px;color:var(--ink3);padding:30px 20px 40px
     <div id="list"></div>
   </section>
 </div>
-<footer>所有数据只保存在这台设备的浏览器里，不会上传。平均寿命、退休年龄与陪伴时间均为统计 / 政策口径与个人假设的估算，只为让人感受时间，不作任何预测。<br>活着 · v3</footer>
+<footer>所有数据只保存在这台设备的浏览器里，不会上传。平均寿命、退休年龄与陪伴时间均为统计 / 政策口径与个人假设的估算，只为让人感受时间，不作任何预测。<br>活着 · v4</footer>
 
 <!-- 添加 / 编辑 -->
 <div class="ov" id="ovPerson"><div class="modal" role="dialog">
-  <div class="m-h"><h3 id="pTitle">添加家人</h3><button class="ibtn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="m-h"><h3 id="pTitle">添加人员</h3><button class="ibtn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
   <div class="m-b">
     <div class="field"><span class="flabel">TA 是你的</span><div class="seg six" id="segR"><button type="button" data-v="self">本人</button><button type="button" data-v="father">父亲</button><button type="button" data-v="mother">母亲</button><button type="button" data-v="spouse">配偶</button><button type="button" data-v="child">孩子</button><button type="button" data-v="other">其他</button></div></div>
     <div class="row2">
@@ -371,6 +405,7 @@ footer{text-align:center;font-size:12px;color:var(--ink3);padding:30px 20px 40px
       <div class="row3"><select class="inp" id="fY"></select><select class="inp" id="fM"></select><select class="inp" id="fD"></select></div>
     </div>
     <div class="preview" id="pPreview"></div>
+    <div class="field" id="compField"><label class="chk"><input type="checkbox" id="fComp" checked><span>计入“陪伴时间”</span><span class="hint">朋友等不想计算的，取消勾选即可</span></label></div>
     <details class="fold" id="fold">
       <summary>更多：出生时间 · 个人预期寿命 · 退休设置</summary>
       <div class="row2">
@@ -583,7 +618,7 @@ function avatarSVG(band,g){
   return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><clipPath id="${id}"><circle cx="50" cy="50" r="50"/></clipPath></defs><g clip-path="url(#${id})"><rect width="100" height="100" fill="${bg}"/><circle cx="50" cy="112" r="46" fill="#fff" opacity=".22"/>${inner}</g></svg>`;
 }
 
-/* ================= 活着 v2 ================= */
+/* ================= 活着 v4 ================= */
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const YEAR_DAYS=365.2425,WEEK_YEAR=52;
 const LS_P='huozhe.v2.people',LS_S='huozhe.v2.settings',LS_O='huozhe.v2.sort',LS_SEL='huozhe.v2.sel';
@@ -611,6 +646,11 @@ function statutoryRetireMonths(type,by,bm){
 
 let people=load(LS_P,[]),settings=load(LS_S,{region:'shandong',m:REGIONS.shandong.m,f:REGIONS.shandong.f});
 let sortKey=localStorage.getItem(LS_O)||'added',selId=localStorage.getItem(LS_SEL)||null;
+function migrate(){let ch=false;people.forEach(p=>{
+  if(p.comp===undefined){p.comp=true;ch=true}
+  if(p.kidMode===undefined&&relType(p)==='child'){p.kidMode='auto';ch=true}
+  if(/^demo/.test(String(p.id))&&relType(p)==='child'&&p.g==='f'&&p.sy===2014&&p.sm===6&&p.sd===1&&p.name!=='王小禾'){p.name='王小禾';ch=true}/* 旧示例女儿改名 */
+});if(ch)saveP()}
 function load(k,d){try{const v=JSON.parse(localStorage.getItem(k));return v??d}catch(e){return d}}
 function saveP(){localStorage.setItem(LS_P,JSON.stringify(people))}
 function saveS(){localStorage.setItem(LS_S,JSON.stringify(settings))}
@@ -644,11 +684,17 @@ function remF(c){return Math.max(c.remain/YEAR_DAYS,eFloor(c.years))}
 /* ---------- 陪伴默认假设 ---------- */
 const COMP_DEF={
   parent:{visits:6,days:2},
-  stages:[{k:'pre',n:'学龄前',a:0,b:3,d:365},{k:'kg',n:'幼儿园',a:3,b:6,d:365},{k:'pri',n:'小学',a:6,b:12,d:365},{k:'mid',n:'初中',a:12,b:15,d:365},{k:'high',n:'高中',a:15,b:18,d:365},{k:'uni',n:'大学',a:18,b:22,d:60}],
+  other:{visits:1,unit:'m',hours:3},
+  stages:[{k:'pre',n:'学龄前',a:0,b:3,d:365},{k:'kg',n:'幼儿园',a:3,b:6,d:365},{k:'pri',n:'小学',a:6,b:12,d:365},{k:'mid',n:'初中',a:12,b:15,d:365},{k:'high',n:'高中',a:15,b:18,d:52},{k:'uni',n:'大学',a:18,b:22,d:60}],
   work:{visits:6,days:3}
 };
-const STAGE_COL={pre:'#FFE7B5',kg:'#FFD68E',pri:'#F8C070',mid:'#F1A85B',high:'#E58F4B',uni:'#9FC3DA',work:'#7189AB'};
-function compCfg(){const c=settings.comp||{};return{parent:{...COMP_DEF.parent,...(c.parent||{})},work:{...COMP_DEF.work,...(c.work||{})},
+const UNIT={y:{n:'每年',f:1},m:{n:'每月',f:12},w:{n:'每周',f:52.18}};
+function perYear(n,u){return Math.max(0,+n||0)*(UNIT[u]||UNIT.y).f}
+function numOr(v,d){return v===undefined||v===null||v===''||isNaN(+v)?d:+v}
+function unitSel(id,key,u){return `<select data-pv="${key}" data-id="${id}">${Object.entries(UNIT).map(([k,o])=>`<option value="${k}" ${k===u?'selected':''}>${o.n}</option>`).join('')}</select>`}
+function inComp(p){return p.comp!==false}
+const STAGE_COL={cus:'#D7A77B',pre:'#FFE7B5',kg:'#FFD68E',pri:'#F8C070',mid:'#F1A85B',high:'#E58F4B',uni:'#9FC3DA',work:'#7189AB'};
+function compCfg(){const c=settings.comp||{};return{parent:{...COMP_DEF.parent,...(c.parent||{})},other:{...COMP_DEF.other,...(c.other||{})},work:{...COMP_DEF.work,...(c.work||{})},
   stages:COMP_DEF.stages.map(s=>({...s,...((c.stages||[]).find(x=>x.k===s.k)||{})}))}}
 
 /* ---------- 核心计算 ---------- */
@@ -698,8 +744,8 @@ function renderHero(){
     $('#heroL').innerHTML=top+`<div class="focus-name" style="margin-top:34px">从高处看，一生不过几千个格子</div>
       <div class="hero-big"><span class="n num">4,000</span><span class="u">周左右</span></div>
       <div class="letter">右边每一格是一周，一行是一年。添加你自己和你在乎的人，点亮已经走过的格子，也看清还剩下多少——和父母还能见几面，和孩子还能朝夕相处几年。</div>
-      <div class="empty acts" style="padding:22px 0 0;text-align:left;justify-content:flex-start;display:flex;gap:10px"><button class="btn primary" data-go="add">添加第一位家人</button><button class="btn" data-go="demo">先看看示例</button></div>`;
-    $('#heroR').innerHTML=`<div class="t"><h2>人生格子</h2><span>一格一周 · 一行一年</span></div><div class="gridwrap" id="gw"><canvas id="cv"></canvas></div>`;
+      <div class="empty acts" style="padding:22px 0 0;text-align:left;justify-content:flex-start;display:flex;gap:10px"><button class="btn primary" data-go="add">添加人员</button><button class="btn" data-go="demo">先看看示例</button></div>`;
+    $('#heroR').innerHTML=`<div class="t"><h2 data-k="人生格子">人生格子</h2><span>一格一周 · 一行一年</span></div><div class="gridwrap" id="gw"><canvas id="cv"></canvas></div>`;
     requestAnimationFrame(()=>drawGrid(null,null));return}
   if(!people.find(p=>p.id===selId))selId=(selfPerson()||people[0]).id;
   const p=people.find(x=>x.id===selId),c=calc(p,n);
@@ -732,7 +778,7 @@ function renderHero(){
     </div>
     <div class="letter">${letter}</div>`;
   const working=c.work&&c.work.show&&c.work.left>0;
-  $('#heroR').innerHTML=`<div class="t"><h2>俯瞰 ${esc(p.name)} 的一生</h2><span>一格一周 · 一行一年</span></div>
+  $('#heroR').innerHTML=`<div class="t"><h2 data-k="人生格子">俯瞰 ${esc(p.name)} 的一生</h2><span>一格一周 · 一行一年</span></div>
     <div class="gcap">第 <b class="num">${fmt(weeksLived+1)}</b> 周 / 平均约 <b class="num">${fmt(weeksTotal)}</b> 周</div>
     <div class="gridwrap" id="gw"><canvas id="cv"></canvas><div class="pulse" id="pulse"></div></div>
     <div class="legend"><span><i style="background:linear-gradient(90deg,${BAND_COL.baby},${BAND_COL.old})"></i>已点亮（按年龄段）</span><span><i style="background:#FFF1C9;box-shadow:0 0 6px #FFD592"></i>本周</span>${working?'<span><i style="background:rgba(217,179,110,.35)"></i>还要工作</span>':''}<span><i style="background:rgba(255,255,255,.09)"></i>平均寿命内</span><span><i style="border:1px dashed rgba(255,255,255,.18)"></i>超出平均</span></div>`;
@@ -773,7 +819,7 @@ function renderFamily(){
   const y0=Math.floor(Math.min(...rows.map(r=>r.by))/10)*10,y1=Math.ceil(Math.max(...rows.map(r=>r.ey))/10)*10,span=y1-y0;
   const X=y=>((y-y0)/span*100).toFixed(3)+'%';
   let ticks='';for(let y=y0;y<=y1;y+=step)ticks+=`<span style="left:${X(y)}">${y}</span>`;
-  sec.innerHTML=`<div class="sec-head"><div><h2>一家人的时间长河</h2><p>把每个人的一生摊开在同一条时间线上：亮的是走过的路，虚线是按平均寿命还剩的路。</p></div></div>
+  sec.innerHTML=`<div class="sec-head"><div><h2 data-k="01 · 俯瞰">一家人的时间长河</h2><p>把每个人的一生摊开在同一条时间线上：亮的是走过的路，虚线是按平均寿命还剩的路。</p></div></div>
    <div class="stats" style="margin-bottom:12px">
      <div class="panel stat"><div class="k">记录了</div><div class="v num">${people.length}<small>位</small></div><div class="s">${m} 男 · ${f} 女</div></div>
      <div class="panel stat"><div class="k">大家一起走过</div><div class="v num">${fmt(days)}<small>天</small></div><div class="s">≈ ${fmt2(days/YEAR_DAYS,1)} 年人生</div></div>
@@ -791,69 +837,101 @@ function renderFamily(){
 /* ================= 陪伴时间 ================= */
 function childPlan(p,c,selfRem){
   const cfg=compCfg(),a=c.years,H=Math.min(selfRem,remF(c));
-  const stages=[...cfg.stages,{k:'work',n:'工作后',a:22,b:Infinity,d:cfg.work.visits*cfg.work.days}];
+  const wd=cfg.work.visits*cfg.work.days,custom=p.kidMode==='custom';
+  let cd=0;if(custom){cd=Math.min(366,perYear(numOr(p.kVisits,2),p.kUnit||'m')*numOr(p.kDays,1))}
+  const stages=custom?[{k:'cus',n:'自定义',a:0,b:22,d:+cd.toFixed(1)},{k:'work',n:'工作后',a:22,b:Infinity,d:+Math.min(wd,cd).toFixed(1)}]
+    :[...cfg.stages,{k:'work',n:'工作后',a:22,b:Infinity,d:wd}];
   let home=0,homeDays=0,total=0;const parts=[];
   stages.forEach(s=>{const ov=Math.max(0,Math.min(s.b,a+H)-Math.max(s.a,a));const d=ov*s.d;total+=d;if(s.d>=300){home+=ov;homeDays+=d}parts.push({...s,ov,days:d})});
-  return{H,home,homeDays,total,stages,end:a+H,cfg};
+  return{H,home,homeDays,total,stages,end:a+H,cfg,custom,cd};
 }
 function renderComp(){
   const sec=$('#secComp');if(!people.length){sec.innerHTML='';return}
   const n=new Date(),me=selfPerson(),mc=me?calc(me,n):null,selfRem=mc?remF(mc):Infinity,cfg=compCfg();
-  const parents=people.filter(p=>['father','mother'].includes(relType(p))),kids=people.filter(p=>relType(p)==='child'),sp=people.find(p=>relType(p)==='spouse');
-  const head=`<div class="sec-head"><div><h2>陪伴时间</h2><p>不是活了多久，而是还能在一起多久。按${me?'你自己的平均寿命':'对方的平均寿命'}与下面的相处节奏估算，数字都可以改。</p></div></div>`;
-  if(!parents.length&&!kids.length&&!sp){sec.innerHTML=head+`<div class="panel comp-empty">在添加或编辑家人时，把“TA 是你的”选为 <b>父亲 / 母亲 / 孩子 / 配偶</b>，这里就会算出你们还能见几面、还能朝夕相处多久。</div>`;return}
+  const C=people.filter(p=>!isSelf(p)&&inComp(p)),off=people.filter(p=>!isSelf(p)&&!inComp(p));
+  const parents=C.filter(p=>['father','mother'].includes(relType(p))),kids=C.filter(p=>relType(p)==='child'),sp=C.find(p=>relType(p)==='spouse'),others=C.filter(p=>relType(p)==='other');
+  const head=`<div class="sec-head"><div><h2 data-k="02 · 在一起">陪伴时间</h2><p>不是活了多久，而是还能在一起多久。按${me?'你自己的平均寿命':'对方的平均寿命'}与下面的相处节奏估算，数字都可以改。</p></div></div>`;
+  const offBar=off.length?`<div class="comp-off">不计入陪伴时间：${off.map(p=>`<span>${esc(p.name)}<button data-comp-on="${p.id}" title="重新计入">计入</button></span>`).join('')}</div>`:'';
+  if(!parents.length&&!kids.length&&!sp&&!others.length){sec.innerHTML=head+`<div class="panel comp-empty">在添加或编辑人员时，把“TA 是你的”选为 <b>父亲 / 母亲 / 孩子 / 配偶 / 其他</b>，并勾选“计入陪伴时间”，这里就会算出你们还能见几面、还能相处多久。</div>`+offBar;return}
+  const offBtn=p=>`<button class="cp-off" data-comp-off="${p.id}" title="不计入陪伴时间">不计入</button>`;
   let pm=0,pd=0,pspring=0,cards='';
-  parents.forEach(p=>{const c=calc(p,n),v=+p.visits||cfg.parent.visits,dd=+p.visitDays||cfg.parent.days;
+  parents.forEach(p=>{const c=calc(p,n),u=p.vUnit||'y',vn=numOr(p.visits,cfg.parent.visits),v=perYear(vn,u),dd=numOr(p.visitDays,cfg.parent.days);
     const R=Math.min(remF(c),selfRem),meet=Math.floor(R*v),days=meet*dd,spr=springsAhead(R);pm+=meet;pd+=days;pspring=Math.max(pspring,spr);
     const lim=remF(c)<=selfRem?`${p.g==='m'?'他':'她'}的`:'你的';
-    cards+=`<div class="panel cp"><div class="cp-h">${avatar(p,c)}<div><h3>${esc(relLabel(p))} · ${esc(p.name)}</h3><div class="k">${c.age.y} 岁${c.over?' · 已超越平均寿命':''}</div></div><span class="badge">${REL[relType(p)]}</span></div>
+    cards+=`<div class="panel cp"><div class="cp-h">${avatar(p,c)}<div><h3>${esc(relLabel(p))} · ${esc(p.name)}</h3><div class="k">${c.age.y} 岁${c.over?' · 已超越平均寿命':''}</div></div><span class="badge">${REL[relType(p)]}</span>${offBtn(p)}</div>
       <div class="cp-main">按现在的节奏，还能见面约 <b class="hl num">${fmt(meet)}</b> 次，相处约 <b class="num">${fmt(days)}</b> 天（≈ ${fmt2(days/30.4,1)} 个月）。</div>
-      <div class="cp-edit">每年见 <input type="number" min="0" max="365" data-pv="visits" data-id="${p.id}" value="${v}"> 次，每次 <input type="number" min="0.5" max="60" step="0.5" data-pv="visitDays" data-id="${p.id}" value="${dd}"> 天</div>
+      <div class="cp-edit">${unitSel(p.id,'vUnit',u)} 见 <input type="number" min="0" max="365" step="0.5" data-pv="visits" data-id="${p.id}" value="${vn}"> 次，每次 <input type="number" min="0.5" max="60" step="0.5" data-pv="visitDays" data-id="${p.id}" value="${dd}"> 天</div>
       <div class="cp-kv"><div><div class="k">一起过的春节</div><div class="v num">${spr}<small> 个</small></div></div><div><div class="k">可相处的年数</div><div class="v num">${fmt2(R,1)}<small> 年</small></div></div><div><div class="k">占余下时间</div><div class="v num">${R>0?(days/(R*YEAR_DAYS)*100).toFixed(1):'0'}<small> %</small></div></div></div>
-      <div class="cp-note">按${lim}余寿计算${c.over?'（已超越平均寿命，按高龄平均余寿约值估算）':''}。</div></div>`});
+      <div class="cp-note">按${lim}余寿计算${c.over?'（已超越平均寿命，按高龄平均余寿约值估算）':''}；每年约 ${fmt2(v,0)} 次。</div></div>`});
   let kidHome=0,kd=0;
   kids.forEach(p=>{const c=calc(p,n),P=childPlan(p,c,selfRem);kidHome=Math.max(kidHome,P.home);kd+=P.total;
     const end=Math.max(P.end,c.years+.01),w=y=>(y/end*100).toFixed(3)+'%';
     const segs=P.stages.filter(s=>s.a<end).map(s=>{const b=Math.min(s.b,end),wd=(b-s.a)/end*100;return `<div class="tl-seg" style="width:${wd.toFixed(3)}%;background:${STAGE_COL[s.k]}" title="${s.n} ${s.a}–${s.b===Infinity?'':s.b}岁 · 每年约${s.d}天">${wd>9?s.n:''}</div>`}).join('');
-    const ax=[];[0,6,12,18,22].forEach(v=>{if(v<end&&(!ax.length||(v-ax[ax.length-1])/end>.08)&&(end-v)/end>.1)ax.push(v)});
-    const afterUni=P.stages.find(s=>s.k==='uni'),work=cfg.work;
-    let main;
-    const later=P.stages.filter(s=>s.d<300&&s.b>c.years).map(s=>`${s.n}每年约 <b>${s.d}</b> 天${s.k==='work'?`（${work.visits} 次 × ${work.days} 天）`:''}`).join('，');
-    if(P.home>0)main=`和${esc(p.name)}还能朝夕相处约 <b class="hl num">${fmt2(P.home,1)}</b> 年 / <b class="num">${fmt(P.homeDays)}</b> 天，之后${later}。`;
-    else if(c.years<22)main=`${esc(p.name)}已经不常在家：${later}。`;
-    else main=`${esc(p.name)}已经工作，按每年 ${work.visits} 次 × ${work.days} 天，每年在一起约 <b>${work.visits*work.days}</b> 天。`;
-    const share=P.total>0?P.homeDays/P.total*100:0;
-    cards+=`<div class="panel cp"><div class="cp-h">${avatar(p,c)}<div><h3>${esc(relLabel(p))} · ${esc(p.name)}</h3><div class="k">${c.age.y} 岁 · ${c.age.y<3?'学龄前':c.age.y<6?'幼儿园':c.age.y<12?'小学':c.age.y<15?'初中':c.age.y<18?'高中':c.age.y<22?'大学':'已工作'}</div></div><span class="badge">孩子</span></div>
+    const ax=[];(P.custom?[0,22]:[0,6,12,15,18,22]).forEach(v=>{if(v<end&&(!ax.length||(v-ax[ax.length-1])/end>.08)&&(end-v)/end>.1)ax.push(v)});
+    const work=cfg.work,stageName=c.age.y<3?'学龄前':c.age.y<6?'幼儿园':c.age.y<12?'小学':c.age.y<15?'初中':c.age.y<18?'高中':c.age.y<22?'大学':'已工作';
+    let main,assume;
+    if(P.custom){const ku=p.kUnit||'m',kv=numOr(p.kVisits,2),kdd=numOr(p.kDays,1);
+      main=c.years<22?`不住在一起，按 <b>${UNIT[ku].n} ${kv} 次 × ${kdd} 天</b>，每年在一起约 <b>${fmt2(P.cd,0)}</b> 天；22 岁工作后每年约 ${fmt2(P.stages[1].d,0)} 天。`
+        :`按 <b>${UNIT[ku].n} ${kv} 次 × ${kdd} 天</b>（不超过工作后默认 ${work.visits} 次 × ${work.days} 天），每年在一起约 <b>${fmt2(P.stages[1].d,0)}</b> 天。`;
+      assume=`当前假设：<b>不同住 · 自定义见面</b>（${UNIT[ku].n} ${kv} 次，每次 ${kdd} 天），不再按学段计算`}
+    else{const later=P.stages.filter(s=>s.d<300&&s.b>c.years).map(s=>`${s.n}每年约 <b>${s.d}</b> 天${s.k==='work'?`（${work.visits} 次 × ${work.days} 天）`:s.k==='high'?`（≈ 每周 ${fmt2(s.d/52.18,1)} 天）`:''}`).join('，');
+      if(P.home>0)main=`和${esc(p.name)}还能朝夕相处约 <b class="hl num">${fmt2(P.home,1)}</b> 年 / <b class="num">${fmt(P.homeDays)}</b> 天，之后${later}。`;
+      else if(c.years<22)main=`${esc(p.name)}已经不常在家：${later}。`;
+      else main=`${esc(p.name)}已经工作，按每年 ${work.visits} 次 × ${work.days} 天，每年在一起约 <b>${work.visits*work.days}</b> 天。`;
+      const hs=cfg.stages.find(s=>s.k==='high');
+      assume=`当前假设：<b>同住 · 按学段</b>（15 岁前天天在家，高中起每年约 ${hs.d} 天${hs.d<=60?'≈ 每周见一次':''}，大学每年约 ${cfg.stages.find(s=>s.k==='uni').d} 天）`}
+    const share=P.total>0?P.homeDays/P.total*100:0,km=P.custom?'custom':'auto';
+    cards+=`<div class="panel cp"><div class="cp-h">${avatar(p,c)}<div><h3>${esc(relLabel(p))} · ${esc(p.name)}</h3><div class="k">${c.age.y} 岁 · ${stageName}</div></div><span class="badge">孩子</span>${offBtn(p)}</div>
+      <div class="kseg"><button data-km="auto" data-id="${p.id}" class="${km==='auto'?'on':''}">同住 · 按学段</button><button data-km="custom" data-id="${p.id}" class="${km==='custom'?'on':''}">不同住 · 自定义</button></div>
+      ${P.custom?`<div class="cp-edit">${unitSel(p.id,'kUnit',p.kUnit||'m')} 见 <input type="number" min="0" max="365" step="0.5" data-pv="kVisits" data-id="${p.id}" value="${numOr(p.kVisits,2)}"> 次，每次 <input type="number" min="0.5" max="60" step="0.5" data-pv="kDays" data-id="${p.id}" value="${numOr(p.kDays,1)}"> 天</div>`:''}
       <div class="cp-main">${main}</div>
       <div class="tl"><div class="tl-bar">${segs}<div class="tl-past" style="width:${w(c.years)}"></div><div class="tl-now" style="left:${w(c.years)}"></div></div>
         <div class="tl-ax">${ax.map(v=>`<span style="left:${w(v)}">${v}岁</span>`).join('')}<span style="left:${w(end)};transform:translateX(-100%);white-space:nowrap">${Math.round(end)}岁</span></div></div>
-      <div class="cp-kv"><div><div class="k">一共还能相处</div><div class="v num">${fmt(P.total)}<small> 天</small></div></div><div><div class="k">折合</div><div class="v num">${fmt2(P.total/YEAR_DAYS,1)}<small> 年</small></div></div><div><div class="k">集中在 18 岁前</div><div class="v num">${share.toFixed(0)}<small> %</small></div></div></div>
+      <div class="cp-kv"><div><div class="k">一共还能相处</div><div class="v num">${fmt(P.total)}<small> 天</small></div></div><div><div class="k">折合</div><div class="v num">${fmt2(P.total/YEAR_DAYS,1)}<small> 年</small></div></div>${P.custom?`<div><div class="k">每年在一起</div><div class="v num">${fmt2(P.cd,0)}<small> 天</small></div></div>`:`<div><div class="k">集中在 15 岁前</div><div class="v num">${share.toFixed(0)}<small> %</small></div></div>`}</div>
+      <div class="cp-assume">${assume}</div>
       <div class="cp-note">斜线部分是已经陪过的；时间轴到${me?'你的平均寿命':'对方的平均寿命'}为止（届时${p.g==='m'?'他':'她'}约 ${Math.round(end)} 岁）。</div></div>`});
   let spCard='',spY=0;
   if(sp){const c=calc(sp,n);spY=Math.min(selfRem,remF(c));const spr=springsAhead(spY);
-    spCard=`<div class="panel cp"><div class="cp-h">${avatar(sp,c)}<div><h3>${esc(relLabel(sp))} · ${esc(sp.name)}</h3><div class="k">${c.age.y} 岁</div></div><span class="badge">配偶</span></div>
+    spCard=`<div class="panel cp"><div class="cp-h">${avatar(sp,c)}<div><h3>${esc(relLabel(sp))} · ${esc(sp.name)}</h3><div class="k">${c.age.y} 岁</div></div><span class="badge">配偶</span>${offBtn(sp)}</div>
       <div class="cp-main">按两个人中较短的平均余寿，还能相伴约 <b class="hl num">${fmt2(spY,1)}</b> 年，约 <b class="num">${fmt(spY*YEAR_DAYS)}</b> 天、<b>${spr}</b> 个春节。</div>
       <div class="cp-kv"><div><div class="k">周末</div><div class="v num">${fmt(spY*52.18)}<small> 个</small></div></div><div><div class="k">一起吃的晚饭</div><div class="v num">${bigCN(spY*YEAR_DAYS*.8).v}<small> ${bigCN(spY*YEAR_DAYS*.8).u}顿</small></div></div><div><div class="k">春节</div><div class="v num">${spr}<small> 个</small></div></div></div>
       <div class="cp-note">晚饭按八成的日子一起吃估算。</div></div>`}
+  let om=0,oh=0,oCards='';
+  others.forEach(p=>{const c=calc(p,n),u=p.vUnit||cfg.other.unit,vn=numOr(p.visits,cfg.other.visits),v=perYear(vn,u),hh=numOr(p.visitHours,cfg.other.hours);
+    const R=Math.min(remF(c),selfRem),meet=Math.floor(R*v),hours=meet*hh;om+=meet;oh+=hours;
+    oCards+=`<div class="panel cp"><div class="cp-h">${avatar(p,c)}<div><h3>${esc(relLabel(p)||'其他')} · ${esc(p.name)}</h3><div class="k">${c.age.y} 岁${c.over?' · 已超越平均寿命':''}</div></div><span class="badge">其他</span>${offBtn(p)}</div>
+      <div class="cp-main">按现在的节奏，还能见面约 <b class="hl num">${fmt(meet)}</b> 次，在一起约 <b class="num">${fmt(hours)}</b> 小时（≈ ${fmt2(hours/24,1)} 天）。</div>
+      <div class="cp-edit">${unitSel(p.id,'vUnit',u)} 见 <input type="number" min="0" max="365" step="0.5" data-pv="visits" data-id="${p.id}" value="${vn}"> 次，每次 <input type="number" min="0.5" max="72" step="0.5" data-pv="visitHours" data-id="${p.id}" value="${hh}"> 小时</div>
+      <div class="cp-kv"><div><div class="k">每年见面</div><div class="v num">${fmt2(v,0)}<small> 次</small></div></div><div><div class="k">可相处的年数</div><div class="v num">${fmt2(R,1)}<small> 年</small></div></div><div><div class="k">合计</div><div class="v num">${fmt2(hours/24,1)}<small> 天</small></div></div></div>
+      <div class="cp-note">朋友、亲戚等。不想计算的话，点右上角“不计入”，或在编辑里取消“计入陪伴时间”。</div></div>`});
   const sum=[];
   if(parents.length)sum.push(`<div class="panel cs"><div class="k">和父母还能见面</div><div class="v num">${fmt(pm)}<small>次</small></div><div class="s">共约 ${fmt(pd)} 天（≈ ${fmt2(pd/30.4,1)} 个月）· 最多 ${pspring} 个春节${parents.length>1?' · 按人次相加':''}</div></div>`);
-  if(kids.length)sum.push(`<div class="panel cs"><div class="k">和孩子还能朝夕相处</div><div class="v num">${fmt2(kidHome,1)}<small>年</small></div><div class="s">${kids.length>1?'以最小的孩子计 · ':''}之后见面会越来越少；一共还能相处约 ${fmt(kd)} 天</div></div>`);
+  if(kids.length)sum.push(`<div class="panel cs"><div class="k">和孩子还能朝夕相处</div><div class="v num">${fmt2(kidHome,1)}<small>年</small></div><div class="s">${kids.length>1?'取最长的一位 · ':''}之后见面会越来越少；一共还能相处约 ${fmt(kd)} 天</div></div>`);
   if(sp)sum.push(`<div class="panel cs"><div class="k">和${esc(relLabel(sp))}还能相伴</div><div class="v num">${fmt2(spY,1)}<small>年</small></div><div class="s">约 ${fmt(spY*YEAR_DAYS)} 天</div></div>`);
+  if(others.length)sum.push(`<div class="panel cs"><div class="k">和其他在乎的人还能见面</div><div class="v num">${fmt(om)}<small>次</small></div><div class="s">${others.length} 位 · 共约 ${fmt(oh)} 小时（≈ ${fmt2(oh/24,1)} 天）</div></div>`);
   const noSelf=me?'':`<div class="panel comp-empty" style="margin-bottom:14px">还没有标记“本人”。把你自己加进来（TA 是你的 → 本人），结果会同时受你自己的平均寿命限制，更准确。</div>`;
   const st=cfg.stages.map(s=>`<div class="st"><b>${s.n}（${s.a}–${s.b} 岁）</b>每年在一起 <input type="number" min="0" max="366" data-st="${s.k}" value="${s.d}"> 天</div>`).join('');
-  sec.innerHTML=head+noSelf+`<div class="comp-sum">${sum.join('')}</div><div class="comp-grid">${cards}${spCard}</div>
-    <details class="panel assume" id="assume" ${renderComp.open?'open':''}><summary>调整估算假设（孩子各阶段 · 工作后 · 父母默认）</summary>
+  sec.innerHTML=head+noSelf+`<div class="comp-sum">${sum.join('')}</div><div class="comp-grid">${cards}${spCard}${oCards}</div>${offBar}
+    <details class="panel assume" id="assume" ${renderComp.open?'open':''}><summary>调整估算假设（孩子各阶段 · 工作后 · 父母 / 其他人默认）</summary>
       <div class="st-grid">${st}
         <div class="st"><b>孩子工作后（22 岁起）</b>每年 <input type="number" min="0" max="365" data-cw="visits" value="${cfg.work.visits}"> 次 × <input type="number" min="0.5" max="60" step="0.5" data-cw="days" value="${cfg.work.days}"> 天</div>
         <div class="st"><b>父母默认</b>每年 <input type="number" min="0" max="365" data-cp="visits" value="${cfg.parent.visits}"> 次 × <input type="number" min="0.5" max="60" step="0.5" data-cp="days" value="${cfg.parent.days}"> 天</div>
-      </div><div class="cp-note" style="margin:-6px 0 14px">按国内常见学制：3 岁入园、6 岁上小学、12 岁初中、15 岁高中、18 岁上大学、22 岁工作。高中住校可把“高中”改小（如 120 天）。</div></details>`;
+        <div class="st"><b>其他人默认</b>每月 <input type="number" min="0" max="31" step="0.5" data-co="visits" value="${cfg.other.visits}"> 次 × <input type="number" min="0.5" max="72" step="0.5" data-co="hours" value="${cfg.other.hours}"> 小时</div>
+      </div><div class="cp-note" style="margin:-6px 0 14px">按国内常见学制：3 岁入园、6 岁上小学、12 岁初中、15 岁高中、18 岁上大学、22 岁工作。高中默认住校、每周见一次（约 52 天/年），走读可改大（如 300 天）。父母离异、孩子不跟你住时，在孩子卡片上选“不同住 · 自定义”，填写实际见面次数。</div></details>`;
 }
-$('#secComp').addEventListener('change',e=>{const t=e.target;if(t.tagName!=='INPUT')return;const v=Math.max(0,+t.value||0);
+function setComp(id,v){const p=people.find(x=>x.id===id);if(!p)return;p.comp=v;saveP();renderComp.open=!!($('#assume')&&$('#assume').open);renderComp();toast(v?`已把「${p.name}」计入陪伴时间`:`「${p.name}」不再计入陪伴时间`)}
+$('#secComp').addEventListener('click',e=>{const b=e.target.closest('[data-comp-off],[data-comp-on],[data-km]');if(!b)return;
+  if(b.dataset.compOff){setComp(b.dataset.compOff,false);return}
+  if(b.dataset.compOn){setComp(b.dataset.compOn,true);return}
+  const p=people.find(x=>x.id===b.dataset.id);if(!p||p.kidMode===b.dataset.km)return;p.kidMode=b.dataset.km;saveP();
+  renderComp.open=!!($('#assume')&&$('#assume').open);renderComp();toast(p.kidMode==='custom'?'已改为不同住 · 按自定义见面次数':'已改为同住 · 按学段')});
+$('#secComp').addEventListener('change',e=>{const t=e.target;if(t.tagName!=='INPUT'&&t.tagName!=='SELECT')return;const v=t.tagName==='SELECT'?t.value:Math.max(0,+t.value||0);
   if(t.dataset.pv){const p=people.find(x=>x.id===t.dataset.id);p[t.dataset.pv]=v;saveP()}
   else{settings.comp=settings.comp||{};const c=settings.comp;
     if(t.dataset.st){c.stages=c.stages||[];const o=c.stages.find(x=>x.k===t.dataset.st);o?o.d=v:c.stages.push({k:t.dataset.st,d:v})}
     if(t.dataset.cw){c.work={...(c.work||{}),[t.dataset.cw]:v}}
     if(t.dataset.cp){c.parent={...(c.parent||{}),[t.dataset.cp]:v}}
+    if(t.dataset.co){c.other={...(c.other||{}),[t.dataset.co]:v,unit:'m'}}
     saveS()}
   renderComp.open=!!($('#assume')&&$('#assume').open);renderComp();toast('已重新计算')});
 $('#secComp').addEventListener('toggle',e=>{if(e.target.id==='assume')renderComp.open=e.target.open},true);
@@ -940,7 +1018,7 @@ function fillRet(){const s=$('#fRet');s.innerHTML='';
   s.add(new Option('自定义退休年龄','custom'));s.add(new Option('不计算（学生、自由职业等）','none'));
   if(F.g==='m'&&F.ret==='f50')F.ret='std';s.value=F.ret;$('#retCustom').style.display=F.ret==='custom'?'':'none'}
 function syncForm(){seg('#segR',F.rt);seg('#segG',F.g);seg('#segC',F.cal);$('#fLife').placeholder=`默认 ${F.g==='m'?settings.m:settings.f}`;
-  $('#fRel').placeholder=relLabel({rel:'',relType:F.rt,g:F.g})||'可不填';fillSelects();fillRet();preview()}
+  $('#fRel').placeholder=relLabel({rel:'',relType:F.rt,g:F.g})||'可不填';$('#compField').style.display=F.rt==='self'?'none':'';$('#fComp').checked=F.comp!==false;fillSelects();fillRet();preview()}
 function preview(){
   const el=$('#pPreview');const s=curSolar();const b=new Date(s.y,s.m-1,s.d);const n=new Date();
   if(b>n){el.className='preview err';el.innerHTML='这个日期还没到哦，请检查出生日期。';return false}
@@ -962,12 +1040,13 @@ $('#segC').onclick=e=>{const b=e.target.closest('button');if(!b||b.dataset.v===F
 $('#fY').onchange=e=>{F.y=+e.target.value;fillSelects();preview()};
 $('#fM').onchange=e=>{const v=e.target.value;F.leap=v[0]==='L';F.m=+v.replace('L','');fillSelects();preview()};
 $('#fD').onchange=e=>{F.d=+e.target.value;preview()};
+$('#fComp').onchange=e=>{F.comp=e.target.checked};
 $('#fRet').onchange=e=>{F.ret=e.target.value;$('#retCustom').style.display=F.ret==='custom'?'':'none';preview()};
 ['#fRetY','#fRetM','#fTime'].forEach(s=>$(s).oninput=preview);
 function openForm(p){
-  F=p?{id:p.id,rt:relType(p),g:p.g,cal:p.cal,y:p.cal==='lunar'?p.ly:p.sy,m:p.cal==='lunar'?p.lm:p.sm,d:p.cal==='lunar'?p.ld:p.sd,leap:!!p.leap,ret:p.ret||'std'}
-     :{id:null,rt:selfPerson()?'other':'self',g:'m',cal:'solar',y:1990,m:1,d:1,leap:false,ret:'std'};
-  $('#pTitle').textContent=p?'编辑 · '+p.name:'添加家人';
+  F=p?{id:p.id,rt:relType(p),g:p.g,cal:p.cal,y:p.cal==='lunar'?p.ly:p.sy,m:p.cal==='lunar'?p.lm:p.sm,d:p.cal==='lunar'?p.ld:p.sd,leap:!!p.leap,ret:p.ret||'std',comp:inComp(p)}
+     :{id:null,rt:selfPerson()?'other':'self',g:'m',cal:'solar',y:1990,m:1,d:1,leap:false,ret:'std',comp:true};
+  $('#pTitle').textContent=p?'编辑 · '+p.name:'添加人员';
   $('#fName').value=p?p.name:'';$('#fRel').value=p?p.rel||'':'';$('#fTime').value=p?p.time||'':'';$('#fLife').value=p&&p.life?p.life:'';
   $('#fRetY').value=p&&p.retY?p.retY:'';$('#fRetM').value=p&&p.retM?p.retM:'';
   $('#fold').open=!!(p&&(p.time||p.life||(p.ret&&p.ret!=='std')));
@@ -980,9 +1059,10 @@ $('#pSave').onclick=()=>{
   if(F.rt==='spouse'){const o=people.find(x=>relType(x)==='spouse'&&x.id!==F.id);if(o){toast('已有配偶：'+o.name);return}}
   const s=curSolar(),old=people.find(x=>x.id===F.id);
   const rec={...(old||{}),id:F.id||('p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)),name,rel:$('#fRel').value.trim(),relType:F.rt,g:F.g,cal:F.cal,sy:s.y,sm:s.m,sd:s.d,
-    time:$('#fTime').value||'',life:+$('#fLife').value||null,ret:F.ret,retY:+$('#fRetY').value||null,retM:+$('#fRetM').value||0};
+    time:$('#fTime').value||'',life:+$('#fLife').value||null,comp:F.rt==='self'?true:F.comp!==false,ret:F.ret,retY:+$('#fRetY').value||null,retM:+$('#fRetM').value||0};
   if(F.cal==='lunar')Object.assign(rec,{ly:F.y,lm:F.m,ld:F.d,leap:F.leap});else{delete rec.ly;delete rec.lm;delete rec.ld;delete rec.leap}
   const i=people.findIndex(p=>p.id===rec.id);
+  if(rec.relType==='child'&&!rec.kidMode)rec.kidMode='auto';
   if(i>=0)people[i]=rec;else{rec.created=Date.now();people.push(rec)}
   selId=rec.id;localStorage.setItem(LS_SEL,selId);saveP();closeOv($('#ovPerson'));renderAll();toast(i>=0?'已更新':'已添加 '+name);
 };
@@ -996,11 +1076,11 @@ $('#regions').onchange=e=>{S.region=e.target.value;const r=REGIONS[S.region];if(
 $('#btnSettings').onclick=()=>{S={...settings};$('#sM').value=S.m;$('#sF').value=S.f;renderRegions();openOv('#ovSet')};
 $('#sSave').onclick=()=>{const m=+$('#sM').value,f=+$('#sF').value;if(!(m>20&&m<130&&f>20&&f<130)){toast('请输入 20–130 之间的数值');return}
   settings={...settings,region:S.region,m,f};saveS();closeOv($('#ovSet'));renderAll();toast('已按 '+REGIONS[settings.region].name+' 数据重新计算')};
-$('#bExport').onclick=()=>{const blob=new Blob([JSON.stringify({app:'huozhe',v:3,people,settings},null,2)],{type:'application/json'});
+$('#bExport').onclick=()=>{const blob=new Blob([JSON.stringify({app:'huozhe',v:4,people,settings},null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);const d=new Date();a.download=`活着-备份-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 $('#bImport').onclick=()=>$('#fileIn').click();
 $('#fileIn').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const j=JSON.parse(rd.result);if(!Array.isArray(j.people))throw 0;
-  people=j.people.filter(p=>p&&p.name&&p.sy);if(j.settings)settings=j.settings;saveP();saveS();closeOv($('#ovSet'));renderAll();toast(`已恢复 ${people.length} 位`)}catch(err){toast('备份文件格式不对')}};rd.readAsText(f);e.target.value=''};
+  people=j.people.filter(p=>p&&p.name&&p.sy);if(j.settings)settings=j.settings;migrate();saveP();saveS();closeOv($('#ovSet'));renderAll();toast(`已恢复 ${people.length} 位`)}catch(err){toast('备份文件格式不对')}};rd.readAsText(f);e.target.value=''};
 $('#bDemo').onclick=()=>{closeOv($('#ovSet'));addDemo()};
 $('#bClear').onclick=()=>confirmBox('清空全部？','所有人员都会被删除，且不能撤销。建议先“导出备份”。',()=>{people=[];saveP();closeOv($('#ovSet'));renderAll();toast('已清空')});
 
@@ -1012,14 +1092,15 @@ function addDemo(){
   const demo=[
     {name:'猴哥',rel:'我',relType:'self',g:'m',...L(1987,1,1),time:'06:30'},
     {name:'刘晓燕',rel:'爱人',relType:'spouse',g:'f',...S2(1989,9,8)},
-    {name:'王嘉妍',rel:'女儿',relType:'child',g:'f',...S2(2014,6,1)},
+    {name:'王小禾',rel:'女儿',relType:'child',g:'f',...S2(2010,6,1)},
     {name:'王一诺',rel:'儿子',relType:'child',g:'m',...S2(2020,10,18)},
     {name:'王建国',rel:'爸爸',relType:'father',g:'m',...L(1958,8,15),visits:6,visitDays:2},
     {name:'张桂兰',rel:'妈妈',relType:'mother',g:'f',...S2(1961,5,20),ret:'f50',visits:6,visitDays:2},
-    {name:'王德厚',rel:'爷爷',relType:'other',g:'m',...L(1933,12,8)},
-    {name:'陈小满',rel:'外甥女',relType:'other',g:'f',...S2(2025,8,5)}
+    {name:'王德厚',rel:'爷爷',relType:'other',g:'m',...L(1933,12,8),visits:4,vUnit:'y',visitHours:8},
+    {name:'赵一鸣',rel:'老友',relType:'other',g:'m',...S2(1986,3,12),visits:1,vUnit:'m',visitHours:3},
+    {name:'陈小满',rel:'外甥女',relType:'other',g:'f',...S2(2025,8,5),comp:false}
   ].filter(d=>!(hasSelf&&d.relType==='self')&&!(hasSp&&d.relType==='spouse'));
-  const t=Date.now();demo.forEach((d,i)=>people.push({ret:'std',time:'',life:null,...d,id:'demo'+t.toString(36)+i,created:t+i}));
+  const t=Date.now();demo.forEach((d,i)=>people.push({ret:'std',time:'',life:null,comp:true,...(d.relType==='child'?{kidMode:'auto'}:{}),...d,id:'demo'+t.toString(36)+i,created:t+i}));
   selId=(selfPerson()||people[0]).id;localStorage.setItem(LS_SEL,selId);
   saveP();renderAll();toast('已导入示例数据，可随时编辑或删除');
 }
@@ -1038,7 +1119,7 @@ $('#list').onclick=e=>{
 };
 let rz,lw=window.innerWidth;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{const p=people.find(x=>x.id===selId);drawGrid(p||null,p?calc(p):null);
   if((lw<600)!==(window.innerWidth<600))renderFamily();lw=window.innerWidth;tick()},120)});
-renderAll();
+migrate();renderAll();
 
 </script>
 </body>
